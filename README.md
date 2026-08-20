@@ -32,7 +32,10 @@ demonstrated in ~140 commented lines; read it start to finish.
 3. Copy the renamed folder into `widgets/` at the root of your
    Rootboard install (over SSH, SD card, or however you reach the
    kiosk's filesystem).
-4. On the kiosk, open **Settings → Widgets** and enable it.
+4. On the kiosk, open **Settings** and find it under **Community
+   Widgets** — that's where freshly dropped widget folders show up,
+   and they stay there even after you enable them — then flip its
+   switch on.
 
 That's it — no restart, no build, no server round-trip beyond the
 kiosk picking up the new folder.

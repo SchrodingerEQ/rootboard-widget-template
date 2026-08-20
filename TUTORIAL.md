@@ -5,12 +5,16 @@ widget — a "Quote of the Day" — built by copying and progressively
 editing `hello-world/`. Every code listing below is complete and meant
 to be pasted as-is; nothing is abbreviated with "add something like...".
 
-**Trust model, up front:** there is no sandbox. A widget you install
-runs with the same access to the page, DOM, network, and API as
-Rootboard itself — only build and install widgets you trust, the same
-as any other software. See
-[CONTRACT §7](https://github.com/SchrodingerEQ/Rootboard.me/blob/main/docs/plans/widget-system/CONTRACT.md#7-trust-model-v1--stated-plainly)
-for the full statement.
+**Trust model, up front** — verbatim from
+[CONTRACT §7](https://github.com/SchrodingerEQ/Rootboard.me/blob/main/docs/plans/widget-system/CONTRACT.md#7-trust-model-v1--stated-plainly):
+
+> **There is no sandbox.** A widget's entry module runs with full access
+> to the page, the DOM, the network, and the same-origin API — the same
+> access the app itself has. Rootboard is a local kiosk appliance:
+> **install only widgets you trust**, exactly as you would when
+> installing software on any computer. A permission system is
+> explicitly out of scope for v1; if one ever lands it will arrive as an
+> `apiVersion` bump, not a silent behavior change.
 
 Budget: about 30 minutes total, in seven steps.
 
@@ -352,11 +356,27 @@ export default {
 
     // ---- build the DOM once ---------------------------------------------
     const root = document.createElement("div");
+    // Gives the scoped <style> below something to select without leaking
+    // outside this widget's own container (CONTRACT §8).
+    root.id = `rb-quote-of-day-${host.widgetId}`;
     root.style.padding = "24px";
     root.style.display = "flex";
     root.style.flexDirection = "column";
     root.style.gap = "16px";
     root.style.color = "var(--rb-ink)"; // theme token — CONTRACT §4 "theme"
+
+    // CONTRACT §8 asks for 56px touch targets on ≥1920px screens (up from
+    // the 48px baseline nextButton sets below) — a media query, so it
+    // can't be expressed via inline style.* assignments; a small scoped
+    // <style> element is the contract-legal way to add one, same pattern
+    // as hello-world/index.js.
+    const touchTargetStyle = document.createElement("style");
+    touchTargetStyle.textContent = `
+      @media (min-width: 1920px) {
+        #${root.id} button { min-height: 56px; min-width: 56px; }
+      }
+    `;
+    root.appendChild(touchTargetStyle);
 
     const quoteText = document.createElement("p");
     quoteText.style.margin = "0";
@@ -461,8 +481,12 @@ You've already been doing this, but it's worth naming explicitly:
   never a hardcoded hex value. That's the entire cost of theme support;
   the host repaints these variables when the theme changes and your
   widget follows along for free.
-- **48px touch targets.** `nextButton`'s `minHeight`/`minWidth` are
-  both `48px`, the kiosk's minimum
+- **48px touch targets — 56px on big screens.** `nextButton`'s
+  `minHeight`/`minWidth` are `48px`, the kiosk's baseline minimum, and
+  the complete listing in step 6 adds a scoped `<style>` media query
+  that bumps both to `56px` on screens ≥1920px wide — the same pattern
+  `hello-world/index.js` uses, since a media query can't be expressed
+  as an inline `style.*` assignment
   ([CONTRACT §8](https://github.com/SchrodingerEQ/Rootboard.me/blob/main/docs/plans/widget-system/CONTRACT.md#8-widget-author-rules)).
   No hover-only affordances, either — there's no mouse on a kiosk.
 - **Idempotent visibility handling.** `quote-of-day` doesn't implement
