@@ -56,7 +56,7 @@ for the full statement.
   summarizes.
 - [TUTORIAL.md](TUTORIAL.md) — build your first widget from scratch in
   about 30 minutes.
-- [CONTRIBUTING.md](CONTRIBUTING.md) (coming soon) — how to build and share a widget
+- [CONTRIBUTING.md](CONTRIBUTING.md) — how to build and share a widget
   today, and the ground rules for doing so.
 - [Rootboard](https://github.com/SchrodingerEQ/Rootboard.me) — the
   kiosk app itself.

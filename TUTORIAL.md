@@ -481,5 +481,5 @@ You've already been doing this, but it's worth naming explicitly:
 - [CONTRACT.md](https://github.com/SchrodingerEQ/Rootboard.me/blob/main/docs/plans/widget-system/CONTRACT.md) —
   the full normative contract: lifecycle, all of `WidgetHost`, discovery
   rules, and the trust model this tutorial only summarized.
-- [CONTRIBUTING.md](CONTRIBUTING.md) (coming soon) — how to build and
+- [CONTRIBUTING.md](CONTRIBUTING.md) — how to build and
   share a widget today, and the ground rules for doing so.
