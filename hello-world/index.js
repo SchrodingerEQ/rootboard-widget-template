@@ -22,11 +22,29 @@ export default {
 
     // ---- build the DOM once -------------------------------------------
     const root = document.createElement("div");
+    // Gives the injected stylesheet below something scoped to select —
+    // an unscoped selector would leak outside `container`, which
+    // CONTRACT §8 doesn't allow ("touch only container, host, and your
+    // own bundled code").
+    root.id = `rb-hello-world-${host.widgetId}`;
     root.style.padding = "24px";
     root.style.display = "flex";
     root.style.flexDirection = "column";
     root.style.gap = "16px";
     root.style.color = "var(--rb-ink)"; // theme token — see CONTRACT §4 "theme"
+
+    // CONTRACT §8 also asks for 56px touch targets on ≥1920px screens (up
+    // from the 48px baseline makeButton() sets below) — a media query, so
+    // it can't be expressed via inline style.* assignments the way the
+    // rest of this file is. A small scoped <style> element is the
+    // contract-legal way to add one from inside the widget's own subtree.
+    const touchTargetStyle = document.createElement("style");
+    touchTargetStyle.textContent = `
+      @media (min-width: 1920px) {
+        #${root.id} button { min-height: 56px; min-width: 56px; }
+      }
+    `;
+    root.appendChild(touchTargetStyle);
 
     const heading = document.createElement("h1");
     heading.style.margin = "0";
