@@ -125,9 +125,20 @@ re-check that the folder is literally named `quote-of-day` (not
 `hello-world` or something else) and that `id` in `widget.json` matches
 it exactly.
 
+---
+
+**⚠️ Important:** From this point on, **edit the copy you sideloaded into
+your Rootboard's `widgets/quote-of-day/` folder directly.** That's your
+live copy — the folder you copied from this template repo is just your
+starting point and won't affect your running app. Steps 4–6 all edit the
+copy in Rootboard, not the template.
+
+---
+
 ## 4. Make it yours: quotes + a "next quote" button (7 min)
 
-Replace `quote-of-day/index.js` entirely with:
+In your Rootboard's `widgets/` folder, replace `quote-of-day/index.js`
+entirely with:
 
 ```js
 // quote-of-day — built from hello-world by following TUTORIAL.md.
@@ -216,12 +227,12 @@ first quote. That's step 5.
 
 ## 5. Persist state: remember the last-shown quote (4 min)
 
-Add a `host.storage` round trip so the widget remembers which quote was
-showing across reloads. `host.storage` is one persistent JSON blob per
-widget, read once on mount and written on every change — reads happen
-up front, writes are fire-and-forget and debounced by the host, so
-your widget never has to manage retries or block the UI on a save; the
-host's job is to make sure that write eventually lands without you
+Add a `host.storage` round trip to your live `widgets/quote-of-day/index.js`
+so the widget remembers which quote was showing across reloads. `host.storage`
+is one persistent JSON blob per widget, read once on mount and written on
+every change — reads happen up front, writes are fire-and-forget and debounced
+by the host, so your widget never has to manage retries or block the UI on a
+save; the host's job is to make sure that write eventually lands without you
 thinking about it.
 
 Insert this block right after `renderQuote();` (the first call to it),
@@ -257,8 +268,8 @@ Widgets declare settings in `widget.json`; the host renders them in its
 settings editor and hands the current values to your widget through
 `host.settings.get()` / `host.settings.subscribe()` — your widget never
 writes its own settings directly (the one exception,
-`host.settings.patch()`, doesn't come up here). Replace
-`quote-of-day/widget.json` with:
+`host.settings.patch()`, doesn't come up here). In your Rootboard's
+`widgets/` folder, replace `quote-of-day/widget.json` with:
 
 ```json
 {
@@ -276,9 +287,9 @@ writes its own settings directly (the one exception,
 }
 ```
 
-Then in `index.js`, add a `showAuthor` variable next to `index`, read
-and subscribe to it after `renderQuote();`, and make `renderQuote`
-respect it:
+Then in your Rootboard's `widgets/quote-of-day/index.js`, add a `showAuthor`
+variable next to `index`, read and subscribe to it immediately after the
+storage block from step 5, and make `renderQuote` respect it:
 
 ```js
     let index = 0; // which QUOTES entry is showing
