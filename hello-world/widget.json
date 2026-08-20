@@ -1,0 +1,13 @@
+{
+  "id": "hello-world",
+  "name": "Hello World",
+  "description": "Minimal example widget — greeting, a persisted counter, and a sleep button. Read alongside index.js as a tutorial for the widget contract.",
+  "version": "1.0.0",
+  "apiVersion": 1,
+  "entry": "index.js",
+  "icon": "icon.svg",
+  "slots": ["section"],
+  "settings": [
+    { "key": "greeting", "label": "Greeting", "type": "string", "default": "Hello" }
+  ]
+}
