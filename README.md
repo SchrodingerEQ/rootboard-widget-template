@@ -54,7 +54,7 @@ for the full statement.
 - [MANIFEST-REFERENCE.md](MANIFEST-REFERENCE.md) — a field-by-field
   table for `widget.json`, linked back to the contract sections it
   summarizes.
-- [TUTORIAL.md](TUTORIAL.md) (coming soon) — build your first widget from scratch in
+- [TUTORIAL.md](TUTORIAL.md) — build your first widget from scratch in
   about 30 minutes.
 - [CONTRIBUTING.md](CONTRIBUTING.md) (coming soon) — how to build and share a widget
   today, and the ground rules for doing so.
